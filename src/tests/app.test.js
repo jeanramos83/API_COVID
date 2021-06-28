@@ -12,10 +12,10 @@ const { validate : isUuid } = require("uuid");
             .post("/")
             .send({
 
-                "name" : "Daniel",
+                "name" : "Jean",
                 cpf : 123,
-                peso : 80,
-                altura : 1.80,
+                peso : 100,
+                altura : 1.90,
                
             })
                 .expect(200);
@@ -23,12 +23,12 @@ const { validate : isUuid } = require("uuid");
                 expect(response.body).toMatchObject({
 
                 "newPaciente": {
-                        "name" : "Daniel",
+                        "name" : "Jean",
                         cpf : 123,
-                        peso : 80,
-                        altura : 1.80,
-                        imc :  24.691358024691358,
-                        "classificacao" : "Peso Normal"
+                        peso : 100,
+                        altura : 1.90,
+                        imc :  27.3,
+                        "classificacao" : "Sobrepeso"
 
 
                 }
@@ -52,22 +52,22 @@ const { validate : isUuid } = require("uuid");
                 const response = await request(app)
                     .post("/")
                     .send({
-                        "name" : "Daniel",
+                        "name" : "Jean",
                          cpf : 123,
-                         peso : 80,
-                        altura : 1.80
+                         peso : 100,
+                        altura : 1.90
                     })
                     .expect(200);
                 expect(isUuid(response.body.newPaciente.id)).toBe(true);
                 expect(response.body).toMatchObject({
                    
                     "newPaciente": {
-                        "name" : "Daniel",
+                        "name" : "Jean",
                         cpf : 123,
-                        peso : 80,
-                        altura : 1.80,
-                        imc :  24.691358024691358,
-                        "classificacao" : "Peso Normal"
+                        peso : 100,
+                        altura : 1.90,
+                        imc :  27.5,
+                        "classificacao" : "Sobrepeso"
                     }
                 });
                 
@@ -76,17 +76,17 @@ const { validate : isUuid } = require("uuid");
                 const responseUpd = await request(app)
                     .put(`/${response.body.newPaciente.id}`)
                     .send({
-                        "name" : "Daniel",
+                        "name" : "Jean",
                          cpf : 123,
-                         peso : 80,
-                        altura : 1.80
+                         peso : 100,
+                        altura : 1.90
                     })
                     .expect(200);
                 expect(responseUpd.body).toMatchObject({
-                    "name" : "Daniel",
+                    "name" : "Jean",
                     cpf : 123,
-                    peso : 80,
-                   altura : 1.80
+                    peso : 100,
+                   altura : 1.90
                 });
             });
         });

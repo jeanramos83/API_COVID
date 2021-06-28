@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const vacinaSchema = new mongoose.Schema({
 
+const vacinaSchema = new mongoose.Schema({
     nome : String,
      dataSolicitacao : Date,
      dataPrevista : Date,
@@ -8,11 +8,6 @@ const vacinaSchema = new mongoose.Schema({
      flTomou : String,
      dataVacinacao : Date,
      cpf : String
-
-
-
 });
 
-
-module.exports = mongoose.model('Vacina',vacinaSchema);
-
+module.exports = mongoose.model('Vacina', vacinaSchema);

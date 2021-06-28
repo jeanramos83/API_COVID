@@ -1,34 +1,38 @@
-const jwt = require('jsonwebtoken');
-const pacienteServico = require('../services/pacienteServico');
+require("dotenv").config({ path: "./src/Config/.env" });
+const jwt = require("jsonwebtoken");
+const pacienteServico = require("./pacienteService");
 
 module.exports.verificarToken = async (request, response, next) => {
-    const token = request.header('Authorization').split(' ');
-    try {
-        if (token == undefined)
-            throw new Error();
-        console.log('token ' + token[1]);
-        const data = jwt.verify(token[1], process.env.JWT_KEY);
-
-        const paciente = await pacienteServico.buscaPacientePorEmail(data.email);
-        if (!paciente) {
-            throw new Error();
-        }
-        request.user = paciente;
-        request.token = token;
-        next();
+  try {
+    const token = request.header("Authorization").split(" ");
+    if (token == undefined) {
+      throw new Error();
     }
-    catch (error) {
-        response.status(401).send({ 'error': 'Not Authorized' })
+    const data = jwt.verify(token[1], process.env.JWT_KEY);
+    const paciente = await pacienteServico.buscaPacientePorEmail(data.email);
+    if (!paciente) {
+      throw new Error();
     }
+    request.user = paciente;
+    request.token = token;
+    next();
+  } catch (error) {
+    response.status(401).send({ error: "Não Autorizado" });
+  }
+};
 
-}
+module.exports.gerarToken = (email) => {
+  if (email == null) {
+    return { auth: false, token: null, message: "Error" };
+  }
+  const token = jwt.sign({ email: email }, process.env.JWT_KEY);
+  return { auth: true, token: token, message: "OK!!" };
+};
 
-module.exports.gerarToken = (email, senha) => {
-   
-    const paciente = pacienteServico.verificaEmailSenha(email, senha);
-    if (paciente == null) {
-        return ({ auth: false, token: null, message: "Error"});;
-    }
-    const token = jwt.sign({ email: paciente.email }, process.env.JWT_KEY);
-    return ({ auth: true, token: token, message : "OK!!" });
-}
+module.exports.verificaEmailSenha = async (email, senha) => {
+  const paciente = await pacienteServico.verificaEmailSenha(email, senha);
+  if (paciente != undefined) {
+    return paciente.email;
+  }
+  return null;
+};

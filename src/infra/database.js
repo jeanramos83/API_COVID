@@ -1,21 +1,21 @@
-require('dotenv').config({ path: './src/config/.env' });
+require("dotenv").config({ path: "./src/Config/.env" });
+
 const mongoose = require("mongoose");
+const cmd = require("cli-color");
 
 const connectDB = async () => {
-    console.log(process.env.DB_CONNECTION);
-    try {
-        await mongoose.connect(process.env.DB_CONNECTION, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useCreateIndex: true,
-            useFindAndModify: false,
-        });
-
-        console.log("MongoDB connection SUCCESS");
-    } catch (error) {
-        console.error("MongoDB connection FAIL");
-        process.exit(1);
-    }
+  try {
+    await mongoose.connect(process.env.DB_CONNECTION, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false,
+    });
+    console.log(cmd.greenBright("Conectado ao cluster do MongoDB"));
+  } catch (error) {
+    console.error(cmd.redBright("Falha em conectar ao cluster do MongoDB"));
+    process.exit(1);
+  }
 };
 
 module.exports = connectDB;

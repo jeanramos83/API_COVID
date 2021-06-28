@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\Data",
+    "\\src\\infra",
+    "\\src\\models",
+    "\\src\\routes",
+    "\\src\\services",
+    "\\src\\tests",
+    "\\src\\util",
+    "\\src\\validations"
+  ],
+  "SelectedNode": "\\src\\Data\\pacienteRepositorio.js",
+  "PreviewInSolutionExplorer": false
+}
